@@ -24,9 +24,6 @@ const api_key = process.env.API_KEY;
 const api_url = process.env.API_URL;
 
 function getNLUInstance() {
-    let api_key = process.env.API_KEY;
-    let api_url = process.env.API_URL;
-    
     const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
     const { IamAuthenticator } = require('ibm-watson/auth');
     
@@ -62,7 +59,6 @@ app.get("/url/emotion", (req,res) => {
          }
      
       const naturalLanguageUnderstanding = getNLUInstance();
-     
       naturalLanguageUnderstanding.analyze(analyzeParams)
       .then(analysisResults => {
          //Print the JSON returned by NLU instance as a formatted string
@@ -89,7 +85,6 @@ app.get("/url/sentiment", (req,res) => {
         }
     }    
     const naturalLanguageUnderstanding = getNLUInstance();
-
     naturalLanguageUnderstanding.analyze(analyzeParams)
     .then(analysisResults => {
         return res.send(analysisResults.result.keywords[0].sentiment,null,2);
@@ -113,7 +108,6 @@ app.get("/text/emotion", (req,res) => {
     }
 
     const naturalLanguageUnderstanding = getNLUInstance();
-
     naturalLanguageUnderstanding.analyze(analyzeParamsEmotion)
     .then(analysisResults => {
         return res.send(analysisResults.result.emotion.document.emotion);
@@ -134,8 +128,8 @@ app.get("/text/sentiment", (req,res) => {
         }
     }
 
+    const naturalLanguageUnderstanding = getNLUInstance();
     getNLUInstance().analyze(analyzeParamsSentiment)
-
     .then(analysisResults => {
     console.log(JSON.stringify(analysisResults, null, 2));
         return res.send(analysisResults.result.sentiment.document.label);
@@ -143,8 +137,6 @@ app.get("/text/sentiment", (req,res) => {
     .catch(err => {
         return res.send("Operation failed "+err);
     });
-
-   
 });
 
 let server = app.listen(8080, () => {
