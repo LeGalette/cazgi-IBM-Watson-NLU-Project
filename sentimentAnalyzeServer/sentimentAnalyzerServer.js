@@ -67,6 +67,7 @@ app.get("/url/emotion", (req,res) => {
          return res.send(analysisResults.result.keywords[0].emotion,null,2);
       })
       .catch(err => {
+      console.log('error:', err);
       return res.send("Could not do desired operation "+err);
       });
 });
@@ -90,6 +91,7 @@ app.get("/url/sentiment", (req,res) => {
         return res.send(analysisResults.result.keywords[0].sentiment,null,2);
     })
     .catch(err => {
+        console.log('error:', err);
         return res.send("Operation failed " + err);
     });
 
@@ -113,6 +115,7 @@ app.get("/text/emotion", (req,res) => {
         return res.send(analysisResults.result.emotion.document.emotion);
     })
     .catch(err => {
+        console.log('error:', err);
         return res.send("Could not do desired operation "+err);
     });
 
@@ -135,6 +138,7 @@ app.get("/text/sentiment", (req,res) => {
         return res.send(analysisResults.result.sentiment.document.label);
     })
     .catch(err => {
+        console.log('error:', err);
         return res.send("Operation failed "+err);
     });
 });
