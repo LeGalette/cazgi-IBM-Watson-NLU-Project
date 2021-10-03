@@ -97,25 +97,27 @@ app.get("/url/sentiment", (req,res) => {
 
 //The endpoint for the webserver ending with /text/emotion
 app.get("/text/emotion", (req,res) => {
-    let textToAnalyze = req.query.text
-    const analyzeParams = 
-    {
-        "text": textToAnalyze,
-        "features":{
-            "keywords":{
-                "sentiment": true,
-                "limit": 1
+
+    const analyzeParamsEmotion = {
+        'text': req.query.text,
+        'features': {
+            'emotion': {
+            'limit': 5
             }
         }
     }
-    naturalLanguageUnderstanding = getNLUInstance();
-    
-    naturalLanguageUnderstanding.analyze(analyzeParams)
+
+    const naturalLanguageUnderstanding = getNLUInstance();
+
+    naturalLanguageUnderstanding.analyze(analyzeParamsEmotion)
     .then(analysisResults => {
-        return res.send(analysisResults.result.keywords[0].emotion,null,2);
+        return res.send(analysisResults.result.emotion.document.emotion);
     })
     .catch(err => {
-        return res.send("Operation failed "+err);
+        return res.send("Could not do desired operation "+err);
+    });
+
+    
 });
 
 app.get("/text/sentiment", (req,res) => {
