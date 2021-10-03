@@ -18,6 +18,11 @@ variables that you set up in the .env file*/
 // const api_key = process.env.API_KEY;
 // const api_url = process.env.API_URL;
 
+const dotenv = require('dotenv');
+dotenv.config();
+const api_key = process.env.API_KEY;
+const api_url = process.env.API_URL;
+
 function getNLUInstance() {
     let api_key = process.env.API_KEY;
     let api_url = process.env.API_URL;
