@@ -123,23 +123,24 @@ app.get("/text/emotion", (req,res) => {
 });
 
 app.get("/text/sentiment", (req,res) => {
-    const analyzeParamsSentiment = {
-        'text': req.query.text,
-        'features': {
-            'sentiment': {
+    let textToAnalyze = req.query.text
+    const analyzeParams = 
+        {
+            "text": textToAnalyze,
+            "features": {
+                "keywords": {
+                    "sentiment": true, "limit": 1 }
             }
         }
-    }
-
+    
     const naturalLanguageUnderstanding = getNLUInstance();
-    getNLUInstance().analyze(analyzeParamsSentiment)
+    naturalLanguageUnderstanding.analyze(analyzeParams)
     .then(analysisResults => {
-    console.log(JSON.stringify(analysisResults, null, 2));
-        return res.send(analysisResults.result.sentiment.document.label);
+        console.log(JSON.stringify(analysisResults.result.keywords[0].sentiment,null,2));
+        return res.send(analysisResults.result.keywords[0].sentiment);
     })
     .catch(err => {
-        console.log('error:', err);
-        return res.send("Operation failed "+err);
+        return res.send("Could not do desired operation "+err);
     });
 });
 
